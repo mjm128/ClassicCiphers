@@ -1,6 +1,8 @@
 import sys
+from CipherInterface import CipherInterface
 from Hill import Hill
 from Caesar import Caesar
+from Vigenre import Vigenre
 
 def main(*arguments):
 	#Display instructions if improper argument length is given
@@ -31,7 +33,15 @@ def main(*arguments):
 		pass
 		
 	elif cipherName == "VIG":
-		pass
+		cipher = Vigenre()
+		if cipher.setKey(key):
+			if encOrDec == "ENC":
+				output = cipher.encrypt(input)
+			elif encOrDec == "DEC":
+				output = cipher.decrypt(input)
+			else:
+				print("Invalid Encryption/Decryption Option")
+				quit()
 		
 	elif cipherName == "CES":
 		cipher = Caesar()
@@ -43,12 +53,16 @@ def main(*arguments):
 			else:
 				print("Invalid Encryption/Decryption Option")
 				quit()
+		else:
+			print("Failure!")
+			quit()
 		
 	elif cipherName == "HIL":
 		pass
 		
 	else:
-		pass
+		print("Cipher Name Error / Unsupported Cipher")
+		quit()
 		
 		
 	with open(outFile, "w") as f:
