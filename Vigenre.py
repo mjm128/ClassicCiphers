@@ -1,5 +1,6 @@
+from CipherInterface import CipherInterface
 
-class Vigenre(object):
+class Vigenre(CipherInterface):
 	
 	def __init__(self):
 		self.key = ""

@@ -1,5 +1,6 @@
 import sys
-from CipherInterface import CipherInterface
+from Hill import Hill
+from Caesar import Caesar
 
 def main(*arguments):
 	#Display instructions if improper argument length is given
@@ -19,13 +20,9 @@ def main(*arguments):
 	#Open data from input file
 	with open(inFile,"r") as f:
 		input = f.read()
-		
-	cipher = CipherInterface()
-		
-	if cipherName == "PLF":
-		cipher.setKey(5)
-		print()
 	
+	if cipherName == "PLF":
+		pass
 	
 	elif cipherName == "RTS":
 		pass
@@ -36,8 +33,16 @@ def main(*arguments):
 	elif cipherName == "VIG":
 		pass
 		
-	elif cipehrName == "CIS":
-		pass
+	elif cipherName == "CES":
+		cipher = Caesar()
+		if cipher.setKey(key):
+			if encOrDec == "ENC":
+				output = cipher.encrypt(input)
+			elif encOrDec == "DEC":
+				output = cipher.decrypt(input)
+			else:
+				print("Invalid Encryption/Decryption Option")
+				quit()
 		
 	elif cipherName == "HIL":
 		pass
@@ -46,12 +51,9 @@ def main(*arguments):
 		pass
 		
 		
-	# with open(outFile, "r+") as f:
-		# f.seek(0)
-		# f.write(output)
-		# f.truncate()
-	
-	print("Success!")
+	with open(outFile, "w") as f:
+		f.write(output)
+		print("Success!")
 
 
 if __name__ == '__main__':
