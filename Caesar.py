@@ -4,19 +4,23 @@ from CipherInterface import CipherInterface
 class Caesar(CipherInterface):
 	
 	def __init__(self):
-		self.key = "NONE"
+		self.key = None
 		
 	def setKey(self, key):
 		try:
+			#If key is an int
 			self.key = int(key)
 			return True
 		except:
-			print("Invalid Key: " + key)
+			try:
+				#If key is a character
+				self.key = ord(key)
+				return True
+			except:
+				print("Invalid Key: " + key)
+		
 		return False
-	
-	def getKey(self, key):
-		print(self.key)
-	
+		
 	def encrypt(self, plainText):
 		cypherText = ""
 		for char in plainText:
