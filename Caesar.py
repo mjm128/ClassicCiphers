@@ -21,26 +21,24 @@ class Caesar(CipherInterface):
 		
 		return False
 		
-	def encrypt(self, plainText):
-		cypherText = ""
-		for char in plainText:
-			if char.isalpha():
-				s = ord('a' if char.islower() else 'A')
-				c = chr((ord(char) - s + self.key) % 26 + s)
-				cypherText += c
-			else:
-				cypherText += char
-				
-		return cypherText
+	def encrypt(self, plainText):				
+		return self.crypt(plainText, True)
 		
 	def decrypt(self, cipherText):
-		plainText = ""
-		for char in cipherText:
+		return self.crypt(cipherText, False)
+		
+	def crypt(self, text, isEncrypt):
+		newText = ""
+		if isEncrypt:
+			mult = 1
+		else:
+			mult = -1
+		for char in text:
 			if char.isalpha():
 				s = ord('a' if char.islower() else 'A')
-				c = chr((ord(char) - s - self.key) % 26 + s)
-				plainText += c
+				c = chr((ord(char) - s + mult * self.key) % 26 + s)
+				newText += c
 			else:
-				plainText += char
+				newText += char
 		
-		return plainText
+		return newText
