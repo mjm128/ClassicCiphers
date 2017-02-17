@@ -13,39 +13,33 @@ class Vigenre(CipherInterface):
 		return True
 		
 	def encrypt(self, plainText):
-		keyCounter = 0
-		cipherText = ""
-		for c in plainText:
-			if (c >= 'a' and c <= 'z') or (c >= 'A' and c <= 'Z'):
-				cipherText += shiftLetter(c, self.key[keyCounter % len(self.key)], True)
-				keyCounter += 1
-			else:
-				cipherText += c
-			
-		return cipherText
+		return self.crypt(plainText, True)
 		
 	def decrypt(self, cipherText):
+		return self.crypt(cipherText, False)
+
+	def crypt(self, text, isEncrypt):
+		newText = ""
 		keyCounter = 0
-		plainText = ""
-		for c in cipherText:
+		for c in text:
 			if (c >= 'a' and c <= 'z') or (c >= 'A' and c <= 'Z'):
-				plainText += shiftLetter(c, self.key[keyCounter % len(self.key)], False)
+				newText += self.shiftLetter(c, self.key[keyCounter % len(self.key)], isEncrypt)
 				keyCounter += 1
 			else:
-				plainText += c
+				newText += c
+				
+		return newText
 		
-		return plainText
-		
-def shiftLetter(c, shift, direction):
-	if direction:#If it's decreption of not
-		mult = 1
-	else:
-		mult = -1
-	shift = ord(shift.lower()) - ord('a')
-	if c >= 'a' and c <= 'z':
-		x = (((ord(c) - ord('a')) + mult*shift) % 26) + ord('a')
+	def shiftLetter(self, c, shift, direction):
+		if direction:#If it's decreption of not
+			mult = 1
+		else:
+			mult = -1
+		shift = ord(shift.lower()) - ord('a')
+		if c >= 'a' and c <= 'z':
+			x = (((ord(c) - ord('a')) + mult*shift) % 26) + ord('a')
 
-	elif c >= 'A' and c <= 'Z':
-		x = (((ord(c) - ord('A')) + mult*shift) % 26) + ord('A')
+		elif c >= 'A' and c <= 'Z':
+			x = (((ord(c) - ord('A')) + mult*shift) % 26) + ord('A')
 
-	return chr(x)
+		return chr(x)
