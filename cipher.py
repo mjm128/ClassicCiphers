@@ -42,6 +42,9 @@ def main(*arguments):
 			else:
 				print("Invalid Encryption/Decryption Option")
 				quit()
+		else:
+			print("Failure: Invalid Key")
+			quit()
 		
 	elif cipherName == "CES":
 		cipher = Caesar()
@@ -54,7 +57,7 @@ def main(*arguments):
 				print("Invalid Encryption/Decryption Option")
 				quit()
 		else:
-			print("Failure!")
+			print("Failure: Invalid Key")
 			quit()
 		
 	elif cipherName == "HIL":
