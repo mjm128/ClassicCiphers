@@ -3,6 +3,7 @@ from CipherInterface import CipherInterface
 from Hill import Hill
 from Caesar import Caesar
 from Vigenre import Vigenre
+from Railfence import Railfence
 
 def main(*arguments):
 	#Display instructions if improper argument length is given
@@ -30,7 +31,18 @@ def main(*arguments):
 		pass
 		
 	elif cipherName == "RFC":
-		pass
+		cipher = Railfence()
+		if cipher.setKey(key):
+			if encOrDec == "ENC":
+				output = cipher.encrypt(input)
+			elif encOrDec == "DEC":
+				output = cipher.decrypt(input)
+			else:
+				print("Invalid Encryption/Decryption Option")
+				quit()
+		else:
+			print("Failure: Invalid Key")
+			quit()
 		
 	elif cipherName == "VIG":
 		cipher = Vigenre()
