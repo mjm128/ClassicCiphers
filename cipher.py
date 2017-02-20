@@ -4,6 +4,7 @@ from Hill import Hill
 from Caesar import Caesar
 from Vigenre import Vigenre
 from Railfence import Railfence
+from Hill import Hill
 
 def main(*arguments):
 	#Display instructions if improper argument length is given
@@ -73,7 +74,18 @@ def main(*arguments):
 			quit()
 		
 	elif cipherName == "HIL":
-		pass
+		cipher = Hill()
+		if cipher.setKey(key):
+			if encOrDec == "ENC":
+				output = cipher.encrypt(input)
+			elif encOrDec == "DEC":
+				output = cipher.decrypt(input)
+			else:
+				print("Invalid Encryption/Decryption Option")
+				quit()
+		else:
+			print("Failure: Invalid Key")
+			quit()
 		
 	else:
 		print("Cipher Name Error / Unsupported Cipher")
