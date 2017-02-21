@@ -8,9 +8,13 @@ class Railfence(CipherInterface):
 	def setKey(self, key):
 		try:
 			self.key = int(key)
-			return True
+			if self.key > 0:
+				return True
 		except:
+			print("Error: Key must be an integer")
 			return False
+		print("Error: Key must be larger than 0")
+		return False
 		
 	def encrypt(self, plainText):
 		cipherText = ""
