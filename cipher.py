@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import sys
 from CipherInterface import CipherInterface
 from Hill import Hill
@@ -22,17 +23,36 @@ def main(*arguments):
 	inFile = arguments[4]
 	outFile = arguments[5]
 	
-	#Open data from input file
+	options = [None] * 2
+	while options[0] != 'y' and options[0] != 'n': 
+		options[0] = input("Strip input file of non alphabetical characters? (Y/N): ").lower()
+	while options[1] != 'y' and options[1] != 'n': 
+		options[1] = input("Convert to lower case? (Y/N): ").lower()
+		
+	#Open data from inputString file
 	with open(inFile,"r") as f:
-		input = f.read()
-	
+		if options[0] == options[1] == 'n':
+			#Both no
+			inputString = f.read()
+		elif options[0] == 'n':
+			#lower case
+			inputString = f.read().lower()
+		elif options[1] == 'n':
+			#strip non-alpha
+			inputString = ''.join([c for c in f.read() if c.isalpha()])
+		
+		else:
+			#strip non-alpha characters and lower case
+			inputString = ''.join([c.lower() for c in f.read() if c.isalpha()])
+			
+	print("\nINPUT: " + inputString)
 	if cipherName == "PLF":
 		cipher = Playfair()
 		if cipher.setKey(key):
 			if encOrDec == "ENC":
-				output = cipher.encrypt(input)
+				output = cipher.encrypt(inputString)
 			elif encOrDec == "DEC":
-				output = cipher.decrypt(input)
+				output = cipher.decrypt(inputString)
 			else:
 				print("Invalid Encryption/Decryption Option")
 				quit()
@@ -47,9 +67,9 @@ def main(*arguments):
 		cipher = Railfence()
 		if cipher.setKey(key):
 			if encOrDec == "ENC":
-				output = cipher.encrypt(input)
+				output = cipher.encrypt(inputString)
 			elif encOrDec == "DEC":
-				output = cipher.decrypt(input)
+				output = cipher.decrypt(inputString)
 			else:
 				print("Invalid Encryption/Decryption Option")
 				quit()
@@ -61,9 +81,9 @@ def main(*arguments):
 		cipher = Vigenre()
 		if cipher.setKey(key):
 			if encOrDec == "ENC":
-				output = cipher.encrypt(input)
+				output = cipher.encrypt(inputString)
 			elif encOrDec == "DEC":
-				output = cipher.decrypt(input)
+				output = cipher.decrypt(inputString)
 			else:
 				print("Invalid Encryption/Decryption Option")
 				quit()
@@ -75,9 +95,9 @@ def main(*arguments):
 		cipher = Caesar()
 		if cipher.setKey(key):
 			if encOrDec == "ENC":
-				output = cipher.encrypt(input)
+				output = cipher.encrypt(inputString)
 			elif encOrDec == "DEC":
-				output = cipher.decrypt(input)
+				output = cipher.decrypt(inputString)
 			else:
 				print("Invalid Encryption/Decryption Option")
 				quit()
@@ -89,9 +109,9 @@ def main(*arguments):
 		cipher = Hill()
 		if cipher.setKey(key):
 			if encOrDec == "ENC":
-				output = cipher.encrypt(input)
+				output = cipher.encrypt(inputString)
 			elif encOrDec == "DEC":
-				output = cipher.decrypt(input)
+				output = cipher.decrypt(inputString)
 			else:
 				print("Invalid Encryption/Decryption Option")
 				quit()
@@ -103,11 +123,10 @@ def main(*arguments):
 		print("Cipher Name Error / Unsupported Cipher")
 		quit()
 		
-		
+	print("\nOUTPUT: " + output)
 	with open(outFile, "w") as f:
 		f.write(output)
-		print("Success!")
-
+		print("\nSuccess!")
 
 if __name__ == '__main__':
 	main(*sys.argv)
