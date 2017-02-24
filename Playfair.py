@@ -85,6 +85,10 @@ class Playfair(CipherInterface):
 				text.append(self.IorJ)
 			else:
 				text.append(c)
+				
+		if len(text)% 2 == 1:
+			#append 'x' at end for padding
+			text.append('x')
 		
 		#pass through 2 characters at a time
 		for i in range(0, len(text), 2):
