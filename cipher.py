@@ -5,6 +5,7 @@ from Caesar import Caesar
 from Vigenre import Vigenre
 from Railfence import Railfence
 from Hill import Hill
+from Playfair import Playfair
 
 def main(*arguments):
 	#Display instructions if improper argument length is given
@@ -26,7 +27,18 @@ def main(*arguments):
 		input = f.read()
 	
 	if cipherName == "PLF":
-		pass
+		cipher = Playfair()
+		if cipher.setKey(key):
+			if encOrDec == "ENC":
+				output = cipher.encrypt(input)
+			elif encOrDec == "DEC":
+				output = cipher.decrypt(input)
+			else:
+				print("Invalid Encryption/Decryption Option")
+				quit()
+		else:
+			print("Failure: Invalid Key")
+			quit()
 	
 	elif cipherName == "RTS":
 		pass
