@@ -1,7 +1,16 @@
+import sys
 from CipherInterface import CipherInterface
-from numpy import linalg
-from numpy import matrix
-import numpy as np
+try:
+	from numpy import linalg, matrix
+	import numpy as np
+except ImportError as error:
+	print("\nImport Error: Please install numpy")
+	if sys.version[0] == '2':
+		version = ""
+	if sys.version[0] == '3':
+		version = "3"
+	print("Example: sudo pip"+version+ " install numpy")
+	quit()
 from math import sqrt
 
 class Hill(CipherInterface):
