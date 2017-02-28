@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 import sys
 from CipherInterface import CipherInterface
 from Hill import Hill
@@ -24,10 +24,17 @@ def main(*arguments):
 	outFile = arguments[5]
 	
 	options = [None] * 2
-	while options[0] != 'y' and options[0] != 'n': 
-		options[0] = input("Strip input file of non alphabetical characters? (Y/N): ").lower()
+	while options[0] != 'y' and options[0] != 'n':
+		if sys.version[0] == '3':
+			options[0] = input("Strip input file of non alphabetical characters? (Y/N): ").lower()
+		elif sys.version[0] == '2':
+			options[0] = raw_input("Strip input file of non alphabetical characters? (Y/N): ").lower() 
 	while options[1] != 'y' and options[1] != 'n': 
-		options[1] = input("Convert to lower case? (Y/N): ").lower()
+		if sys.version[0] == '3':
+			options[1] = input("Convert to lower case? (Y/N): ").lower()
+		elif sys.version[0] == '2':
+			options[1] = raw_input("Convert to lower case? (Y/N): ").lower()
+
 		
 	#Open data from inputString file
 	with open(inFile,"r") as f:
