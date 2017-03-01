@@ -1,6 +1,4 @@
-from CipherInterface import CipherInterface
-
-class Vigenre(CipherInterface):
+class Vigenre():
 	
 	def __init__(self):
 		self.key = None
@@ -31,7 +29,7 @@ class Vigenre(CipherInterface):
 		return newText
 		
 	def shiftLetter(self, c, shift, direction):
-		if direction:#If it's decreption of not
+		if direction:#enc/dec flag
 			mult = 1
 		else:
 			mult = -1

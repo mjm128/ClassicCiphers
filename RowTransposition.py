@@ -1,6 +1,4 @@
-from CipherInterface import CipherInterface
-
-class RowTransposition(CipherInterface):
+class RowTransposition():
 	
 	def __init__(self):
 		self.key = ""

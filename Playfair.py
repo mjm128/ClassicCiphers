@@ -1,6 +1,4 @@
-from CipherInterface import CipherInterface
-
-class Playfair(CipherInterface):
+class Playfair():
 	
 	def __init__(self):
 		self.key = []

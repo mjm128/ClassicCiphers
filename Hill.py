@@ -1,5 +1,4 @@
 import sys
-from CipherInterface import CipherInterface
 try:
 	from numpy import linalg, matrix
 	import numpy as np
@@ -13,7 +12,7 @@ except ImportError as error:
 	quit()
 from math import sqrt
 
-class Hill(CipherInterface):
+class Hill():
 	
 	def __init__(self):
 		self.key = None

@@ -1,6 +1,4 @@
-from CipherInterface import CipherInterface
-
-class Railfence(CipherInterface):
+class Railfence():
 	
 	def __init__(self):
 		self.key = None

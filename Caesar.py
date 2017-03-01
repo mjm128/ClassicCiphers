@@ -1,7 +1,4 @@
-import numbers
-from CipherInterface import CipherInterface
-
-class Caesar(CipherInterface):
+class Caesar():
 	
 	def __init__(self):
 		self.key = None
