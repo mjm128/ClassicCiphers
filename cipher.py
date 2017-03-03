@@ -6,6 +6,7 @@ from Vigenre import Vigenre
 from Railfence import Railfence
 from Hill import Hill
 from Playfair import Playfair
+from RowTransposition import RowTransposition
 
 def main(*arguments):
 	#Display instructions if improper argument length is given
@@ -67,7 +68,18 @@ def main(*arguments):
 			quit()
 	
 	elif cipherName == "RTS":
-		pass
+		cipher = RowTransposition()
+		if cipher.setKey(key):
+			if encOrDec == "ENC":
+				output = cipher.encrypt(inputString)
+			elif encOrDec == "DEC":
+				output = cipher.decrypt(inputString)
+			else:
+				print("Invalid Encryption/Decryption Option")
+				quit()
+		else:
+			print("Failure: Invalid Key")
+			quit()
 		
 	elif cipherName == "RFC":
 		cipher = Railfence()
