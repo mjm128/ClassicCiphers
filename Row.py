@@ -2,87 +2,80 @@ import math
 
 class Row:
 
-    def __init__(self):
-        self.key = None
+	def __init__(self):
+		self.key = None
+		self.matrix = None
 
-    def setKey(self, key):
+	def setKey(self, key):
 		error = ""
 		if len(key) > 0:
-			l = [pair for pair in emumerate(key)]
-			for pair in l:
-				if !pair[0].isalpha():
-					error = "Key must contain only alpha characters"
-					break
+			l = []
+			for index, element in enumerate(key):
+				l.append((element, index))
+				if not element.isalpha():
+					error = "Key must be only alphabetical characters"
 			if error == "":
-				self.key = l
+				l.sort(key=lambda tup: tup[0])
+				self.key = [None] * len(key)
+				for index, pair in enumerate(l):
+					self.key[pair[1]] = index
 				return True
 			try:
 				l = []
 				for index, element in enumerate(key):
-					l.append(int(element), index)
-				self.key = l
+					l.append((int(element), index))
+				l.sort(key=lambda tup: tup[0])
+				self.key = [None] * len(key)
+				for index, pair in enumerate(l):
+					self.key[pair[1]] = index
 				return True
 			except:
 				error = "Key must contain only integers"
-				
+		else:
+			error = "Must enter a key"
 		print(error)
-		return False				
+		return False
 
 	def encrypt(self, plainText):
-		text = [i for i in plainText]
-		if len(text) % len(key) != 0:
-			tmp = [None] * len(text) % len(key)
-			text += tmp
-		matrix = [None] * (len(text) / len(key))
-		for index, value in enumerate(text):
-			matrix[index%len(key)] = value
+		cipherText = ''
+		self.setMatrix(plainText)
 		
+		print(matrix)
+		for element in self.key:
+			cipherText += matrix[element]
+
+		return cipherText
 		
-    def decrypt(self, cipherText):
-
-        position = 0
-        counter = 0
-        tempString = ""
-        plainText = ""
-
-        List = [[] for x in range(len(self.key))]
-
-        # Determines how many letters per column
-        splitStringValue = math.ceil(len(cipherText)/len(self.key))
-        x = splitStringValue
-        # Split the cipherString based on the splitStringValue
-        cipherText = [cipherText[i:i+splitStringValue] for i in range(0, len(cipherText), splitStringValue)]
-
-        for i in self.key:
-            temp = ''.join(cipherText[i-1]) # List starts at 0, thus i-1
-            tempString += temp
-    
-        # Used to append to list
-        cipherText = ''.join(letter for letter in tempString if not letter.isdigit())
-
-        for letter in cipherText:
-          # append by List[position][0] - ROW
-          List[position].append(letter)
-          counter += 1
-          # check every nth letter, counter starts at 0 and goes up to x
-          if(counter == x):
-            position += 1
-            x += splitStringValue
-    
-        # Max item count in a row
-        maxItemLength = len(List[0])
-
-        for i in range(maxItemLength):
-          for j in range(len(List)):
-            tempString2 = ''.join(List[j][i])
-            plainText += tempString2
-      
-        del(List)
-
-        return (plainText)
-
-    # For display purposes
-    def stripText(self, Text):
-        Text = Text.replace("$", "")
-        Text = Text.replace("#", " ")
-        return(Text)
+	def decrypt(self, cipherText):
+		plainText = ""
+		self.matrix = [''] * len(self.key)
+		cardText = len(cipherText)
+		cardKey = len(self.key)
+		
+		counter = 0
+		for element in self.key:
+			for c in range(counter, 1+counter+(cardText/cardKey)):
+				self.matrix[element] += cipherText[c]
+			counter = counter+(cardText/cardKey)
+			if cardText % cardKey > element:
+				#If this column contains an "extra" character
+				self.matrix[element] += cipherText[c]
+				counter += 1
+					
+		for x in range(0, cardText):
+			plainText += self.matrix[x % cardKey][x / cardKey]
+		return (plainText)
+		
+	def setMatrix(self, text):
+		self.matrix = [''] * len(self.key)
+		for columns in range(len(text)):
+			self.matrix[columns % len(self.key)] += plainText[columns]
+		
+p = "securitypasscardsareoftenusedtogainentryintoareasandbuildingswithrestrictedaccessfindoutwhatdataiskeptonanencodedsecuritypasscardandhowtheywork"
+r = Row()
+c = "uparedirosuntteenwakncsisdoyrarentnyaaighrdsdhteaoetsawwcycateattabiistcitdsondrarheksisdouoeirnlsriasoaapndcycntoetssfsgnneddweccfutiteeupadhr"
+l = "45312"
+a = "deacb"
+if r.setKey(l):	
+	a = r.decrypt(c)
+	print(a)
