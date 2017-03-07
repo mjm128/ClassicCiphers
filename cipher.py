@@ -10,11 +10,13 @@ from RowTransposition import RowTransposition
 
 def main(*arguments):
 	#Display instructions if improper argument length is given
-	if len(arguments) != 6:
+	if len(arguments) != 6 and len(arguments) != 7:
 		print("\nINVALID ARGUMENTS:")
-		print("./cipher <CIPHER NAME> <KEY> <ENC/DEC> <INPUTFILE> <OUTPUT FILE>")
-		print("\n- PLF: Playfair\n- RTS: Row Transposition\n"
-		+ "- RFC: Railfence\n- VIG: Vigenre\n- CES: Caesar\n- HIL: Hill")
+		print("./cipher <CIPHER NAME> <KEY> <ENC/DEC> <INPUTFILE> <OUTPUT FILE> <--OPTIONS/-O>")
+		print("\n\tSupported Ciphers:")
+		print("\t- PLF: Playfair\n\t- RTS: Row Transposition\n"
+		+ "\t- RFC: Railfence\n\t- VIG: Vigenre\n\t- CES: Caesar\n\t- HIL: Hill")
+		print("\n\t--OPTIONS - Optional setting: If enabled will ask for converting\n\t\tto lowercase and removing non-alpha characters\n")
 		quit()
 	
 	cipherName = arguments[1].upper()
@@ -23,34 +25,46 @@ def main(*arguments):
 	inFile = arguments[4]
 	outFile = arguments[5]
 	
-	options = [None] * 2
-	while options[0] != 'y' and options[0] != 'n':
-		if sys.version[0] == '3':
-			options[0] = input("Strip input file of non alphabetical characters? (Y/N): ").lower()
-		elif sys.version[0] == '2':
-			options[0] = raw_input("Strip input file of non alphabetical characters? (Y/N): ").lower() 
-	while options[1] != 'y' and options[1] != 'n': 
-		if sys.version[0] == '3':
-			options[1] = input("Convert to lower case? (Y/N): ").lower()
-		elif sys.version[0] == '2':
-			options[1] = raw_input("Convert to lower case? (Y/N): ").lower()
+	try:
+		#Check if option is specified
+		opt = arguments[6].upper()
+	except:
+		opt = None
+	
+	if opt == "--OPTIONS" or opt == "-O":
+		#ask for options
+		options = [None] * 2
+		while options[0] != 'y' and options[0] != 'n':
+			if sys.version[0] == '3':
+				options[0] = input("Strip input file of non alphabetical characters? (Y/N): ").lower()
+			elif sys.version[0] == '2':
+				options[0] = raw_input("Strip input file of non alphabetical characters? (Y/N): ").lower() 
+		while options[1] != 'y' and options[1] != 'n': 
+			if sys.version[0] == '3':
+				options[1] = input("Convert to lower case? (Y/N): ").lower()
+			elif sys.version[0] == '2':
+				options[1] = raw_input("Convert to lower case? (Y/N): ").lower()
+	else:
+		options = ['n', 'n'] #set options to no
 
-		
-	#Open data from inputString file
-	with open(inFile,"r") as f:
-		if options[0] == options[1] == 'n':
-			#Both no
-			inputString = f.read()
-		elif options[0] == 'n':
-			#lower case
-			inputString = f.read().lower()
-		elif options[1] == 'n':
-			#strip non-alpha
-			inputString = ''.join([c for c in f.read() if c.isalpha()])
-		
-		else:
-			#strip non-alpha characters and lower case
-			inputString = ''.join([c.lower() for c in f.read() if c.isalpha()])
+	try:
+		#Open data from inputString file
+		with open(inFile,"r") as f:
+			if options[0] == options[1] == 'n':
+				#Both no
+				inputString = f.read()
+			elif options[0] == 'n':
+				#lower case
+				inputString = f.read().lower()
+			elif options[1] == 'n':
+				#strip non-alpha
+				inputString = ''.join([c for c in f.read() if c.isalpha()])
+			else:
+				#strip non-alpha characters and lower case
+				inputString = ''.join([c.lower() for c in f.read() if c.isalpha()])
+	except:
+		print("\nError: Input file doesn't exist")
+		quit()
 			
 	print("\nINPUT: " + inputString)
 	if cipherName == "PLF":
@@ -142,7 +156,7 @@ def main(*arguments):
 		quit()
 		
 	print("\nOUTPUT: " + output)
-	with open(outFile, "w") as f:
+	with open(outFile, "w+") as f:
 		f.write(output)
 		print("\nSuccess!")
 
