@@ -70,12 +70,3 @@ class Row:
 		self.matrix = [''] * len(self.key)
 		for columns in range(len(text)):
 			self.matrix[columns % len(self.key)] += plainText[columns]
-		
-p = "securitypasscardsareoftenusedtogainentryintoareasandbuildingswithrestrictedaccessfindoutwhatdataiskeptonanencodedsecuritypasscardandhowtheywork"
-r = Row()
-c = "uparedirosuntteenwakncsisdoyrarentnyaaighrdsdhteaoetsawwcycateattabiistcitdsondrarheksisdouoeirnlsriasoaapndcycntoetssfsgnneddweccfutiteeupadhr"
-l = "45312"
-a = "deacb"
-if r.setKey(l):	
-	a = r.decrypt(c)
-	print(a)
