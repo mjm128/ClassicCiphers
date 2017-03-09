@@ -4,8 +4,12 @@ class Vigenre():
 		self.key = None
 		
 	def setKey(self, key):
+		if len(key) == 0:
+			print("\nError: Key cannot be empty")
+			return False
 		for c in key:
 			if not c.isalpha():
+				print("\nError: Key must contain only characters a-z or A-Z")
 				return False
 		self.key = key
 		return True
