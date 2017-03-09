@@ -11,10 +11,12 @@ class Caesar():
 		except:
 			try:
 				#If key is a character
-				self.key = ord(key)
+				self.key = ord(key.lower())-97
+				if self.key < 0 or self.key > 25:
+					raise
 				return True
 			except:
-				print("Invalid Key: " + key)
+				print("\nError: Key must be an integer or a single character a-z or A-Z")
 		
 		return False
 		
