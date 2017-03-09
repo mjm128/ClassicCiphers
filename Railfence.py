@@ -9,9 +9,9 @@ class Railfence():
 			if self.key > 0:
 				return True
 		except:
-			print("Error: Key must be an integer")
+			print("\nError: Key must be an integer")
 			return False
-		print("Error: Key must be larger than 0")
+		print("\nError: Key must be larger than 0")
 		return False
 		
 	def encrypt(self, plainText):
