@@ -16,19 +16,26 @@ class RowTransposition:
 				counter += 1
 
 			# Must have two digits in order for "," to passInspection
-			elif i == "," and counter > 2:
+			elif i == "," and counter > 2 and i != key[-1:]:
 				passInspection = True
 
+			# If there is even an alphabet, stop immediately
 			elif i.isalpha():
 				passInspection = False
+				break
 
 			else:
-
 				passInspection = False
 
 		return (passInspection)
 
 	def setKey(self, key):
+
+		# if all items are letters:
+		if key.isalpha():
+			self.key = self.trueKey(self.convertKey(key))
+
+			return True
 
 		# if all items in key are numbers, change string key into int list
 		if self.hasNumbersInString(key):
@@ -37,14 +44,8 @@ class RowTransposition:
 			self.key = self.trueKey(key)
 			return True
 
-		# if all items are letters:
-		elif key.isalpha():
-			self.key = self.trueKey(self.convertKey(key))
-
-			return True
-
 		else:
-
+			print('\nError: Key must be all letters or all numbers')
 			return False
 
 	def convertKey(self, key):
@@ -133,7 +134,7 @@ class RowTransposition:
 		List = [[] for x in range(len(self.key))]
 
 		# Determines how many letters per column
-		splitStringValue = math.ceil(len(cipherText)/len(self.key))
+		splitStringValue = int(math.ceil(len(cipherText)/len(self.key)))
 		x = splitStringValue
 
 		for i in self.key:
