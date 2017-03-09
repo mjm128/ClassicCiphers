@@ -49,13 +49,13 @@ class Hill():
 		try:
 			linalg.inv(matrix)
 		except Exception:
-			print("This key is not an invertible matrix. Please add a valid key.")
+			print("Error: Key is not an invertible matrix")
 			return False
 
 		#grab the determinant and check if it's equal to 0 or if it's divisible by 2 or 13
 		det = int(linalg.det(matrix))
 		if det == 0 or det % 2 == 0 or det % 13 == 0:
-			print("Error. The key must have a determinant of 0 and must not be divisible by 2 or 13. Please add a valid key.")
+			print("Error: The key must have a determinant of 0 and must not be divisible by 2 or 13")
 			return False
 
 		#return True if it passes all check
@@ -64,6 +64,7 @@ class Hill():
 
 	def encrypt(self, plainText):
 		print("Encrypting...")
+		print(self.key)
 
 		#change to lowercase
 		plainText = plainText.lower()
