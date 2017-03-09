@@ -66,7 +66,6 @@ def main(*arguments):
 		print("\nError: Input file doesn't exist")
 		quit()
 			
-	print("\nINPUT: " + inputString)
 	if cipherName == "PLF":
 		cipher = Playfair()
 		if cipher.setKey(key):
@@ -152,8 +151,10 @@ def main(*arguments):
 			quit()
 		
 	else:
-		print("Cipher Name Error / Unsupported Cipher")
+		print("\nError: Cipher not supported. Please check the name again.")
 		quit()
+		
+	print("\nINPUT: " + inputString)
 		
 	print("\nOUTPUT: " + output)
 	with open(outFile, "w+") as f:
