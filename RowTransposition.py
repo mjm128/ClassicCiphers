@@ -2,154 +2,161 @@ import math
 
 class RowTransposition:
 
-    def __init__(self):
-        self.key = None
+	def __init__(self):
 
-    def setKey(self, key):
-        
-		# if all items in key are numbers, just use the key as it is
-		if all(isinstance(item, int) for item in key):
-			print("Error: Please use a keyword for the key and not numbers!")
+		self.key = None
+
+	def hasNumbersInString(self, key):
+		passInspection = False
+		counter = 0
+
+		for i in key:
+			if i.isdigit():
+				passInspection = True
+				counter += 1
+
+			# Must have two digits in order for "," to passInspection
+			elif i == "," and counter > 2:
+				passInspection = True
+
+			elif i.isalpha():
+				passInspection = False
+
+			else:
+
+				passInspection = False
+
+		return (passInspection)
+
+	def setKey(self, key):
+
+		# if all items in key are numbers, change string key into int list
+		if self.hasNumbersInString(key):
+			key = [int(s) for s in key.split(',')]
+
+			self.key = self.trueKey(key)
 			return True
+
+		# if all items are letters:
 		elif key.isalpha():
-			self.key = self.convertKey(key)
+			self.key = self.trueKey(self.convertKey(key))
+
 			return True
 
 		else:
-			print("Error: Key contains either numbers and/or letters!")
+
 			return False
 
-    def convertKey(self, key):
+	def convertKey(self, key):
 
-        List = []
-        colNumber = len(key)
+		List = []
 
-        # Convert letters to their numeric position in the alphabet
-        for letter in key:
-            if letter >= 'a' and letter <= 'z':
-                x = int(ord(letter) - ord('a'))
+		colNumber = len(key)
+		modifiedList = sorted(List)
 
-            elif letter >= 'A' and letter <= 'Z':
-                x = int(ord(letter) - ord('A'))
+		# Convert letters to their numeric position in the alphabet
+		for letter in key:
+			if letter >= 'a' and letter <= 'z':
+				x = int(ord(letter) - ord('a'))
 
-            List.append(x)
+			elif letter >= 'A' and letter <= 'Z':
+				x = int(ord(letter) - ord('A'))
 
-        tempList = [0 for x in range(len(List))]
+			List.append(x)
 
-        for x in range(len(List)):
-            maxIndex = List.index(max(List))
-            List[maxIndex] = -1 # Found and then replaced by -1, indicating that it has found it
-            tempList[maxIndex] = colNumber
-            colNumber -= 1
+		return (List)
 
-        del(List)
+	def trueKey(self, key):
+		colNumber = len(key)
+		tempList = [0 for x in range(len(key))]
 
-        return (tempList)
+		for x in range(len(key)):
+			# Find max value's index by checking right to left
+			maxIndex = len(key) - key[::-1].index(max(key)) - 1
+			# Found and then replaced by -1, indicating that it has found it
+			key[maxIndex] = -1
+			tempList[maxIndex] = colNumber
+			colNumber -= 1
 
-    def encrypt(self, plainText):
+		return (tempList)
 
-        position = 0
-        result = ""
-        endCharacter = "$"
+	def encrypt(self, plainText):
 
-        List = [[] for x in range(len(self.key))] 
+		position = 0
+		counter = 0
+		cipherText = ''
+		endOfString = False
 
-        # Incase if spaces need to be ignored
-        #plainText = ''.join(letter for letter in plainText if letter.isalnum())
+		List = [[] for x in range(len(self.key))] 
 
-        # Remove /n and add end character
-        #plainText = plainText[0:-1]
-        plainText = plainText + endCharacter
+        # Remove /n from plainText if it exists.
+		plainText = plainText.replace('\n', '')
 
-        # Sorted key that will be used for encryption
-        modifiedKey = sorted(self.key)
+		for letter in plainText:
+			List[position].append(letter)
 
-        for colNumber in self.key:
-            # Insert key for first row to help identify the columns
-            List[position].append(str(colNumber))
-            position += 1
-   
-            if position == len(self.key):
-                position = 0
+			position += 1
+			counter += 1
 
-        for letter in plainText:
-            if letter == " ":
-                List[position].append("#")
-            else:
-                # append by List[position][0] - ROW
-                List[position].append(letter)
+			if counter == len(plainText):
+				endOfString = True
 
-            position += 1
+			# Check to see if padding is needed
+			if abs(len(plainText)) % abs(len(self.key)) != 0:
+				# If it reaches the end of the string, place pad letters
+				if endOfString:
+					while(position < len(self.key)):
+						List[position].append('$')    
+						position += 1
 
-            # Reset position
-            if position == len(self.key):
-                position = 0
-      
-            # If it reaches the end of the string, place pad letters
-            if letter == str(plainText[-1:]):
-                while(position < len(self.key)):
-                    List[position].append("$")    
-                    position += 1
+			# Reset position
+			if position == len(self.key):
+				position = 0
 
-        for i in range(len(self.key)):
-            for j in range(len(self.key)):
-                # Create string when the List key equals to the modifiedKey
-                if(int(modifiedKey[i]) == int(List[j][0])):
-                    tempString = ''.join(List[j])
-                    result += tempString
-        
-        # Create cipherText: Remove letters in the result string
-        cipherText = ''.join(letter for letter in result if not letter.isdigit())
+		for i in range(len(self.key)):
+			placement = self.key[i] - 1
+			tempString = ''.join(List[placement])
+			cipherText += tempString
 
-        del(List)
+		del(counter)
+		del(List)
 
-        return (cipherText)
+		return (cipherText)
 
-    def decrypt(self, cipherText):
+	def decrypt(self, cipherText):
 
-        position = 0
-        counter = 0
-        tempString = ""
-        plainText = ""
+		position = 0
+		counter = 0
+		tempString = ''
+		plainText = ''
 
-        List = [[] for x in range(len(self.key))]
+		List = [[] for x in range(len(self.key))]
 
-        # Determines how many letters per column
-        splitStringValue = math.ceil(len(cipherText)/len(self.key))
-        x = splitStringValue
-        # Split the cipherString based on the splitStringValue
-        cipherText = [cipherText[i:i+splitStringValue] for i in range(0, len(cipherText), splitStringValue)]
+		# Determines how many letters per column
+		splitStringValue = math.ceil(len(cipherText)/len(self.key))
+		x = splitStringValue
 
-        for i in self.key:
-            temp = ''.join(cipherText[i-1]) # List starts at 0, thus i-1
-            tempString += temp
-    
-        # Used to append to list
-        cipherText = ''.join(letter for letter in tempString if not letter.isdigit())
+		for i in self.key:
+			placement = i - 1
+			for letter in cipherText[position:]:
+				List[placement].append(letter)
+				counter += 1
 
-        for letter in cipherText:
-          # append by List[position][0] - ROW
-          List[position].append(letter)
-          counter += 1
-          # check every nth letter, counter starts at 0 and goes up to x
-          if(counter == x):
-            position += 1
-            x += splitStringValue
-    
-        # Max item count in a row
-        maxItemLength = len(List[0])
+				if counter == x:
+					position += splitStringValue
+					break
 
-        for i in range(maxItemLength):
-          for j in range(len(List)):
-            tempString2 = ''.join(List[j][i])
-            plainText += tempString2
-      
-        del(List)
+			counter = 0
 
-        return (plainText)
+			if position == len(cipherText):
+				position = 0
 
-    # For display purposes
-    def stripText(self, Text):
-        Text = Text.replace("$", "")
-        Text = Text.replace("#", " ")
-        return(Text)
+		for i in range(splitStringValue):
+			for j in range(len(List)):
+				tempString2 = ''.join(List[j][i])
+				plainText += tempString2
+
+		del(List)
+
+		plainText = plainText.replace('$', '')
+		return (plainText)
