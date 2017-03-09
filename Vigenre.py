@@ -5,7 +5,7 @@ class Vigenre():
 		
 	def setKey(self, key):
 		if len(key) == 0:
-			print("\nError: Key cannot be empty")
+			print("\nError: Key must be at least one character")
 			return False
 		for c in key:
 			if not c.isalpha():
