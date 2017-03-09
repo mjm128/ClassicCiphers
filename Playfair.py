@@ -68,9 +68,6 @@ class Playfair():
 		for i in range(0, len(text), 2):
 			cipherText += self.cipherRules(text[i], text[i+1], True)
 			
-		for row in self.matrix:
-			print(row)
-			
 		return cipherText
 		
 	def decrypt(self, cipherText):
@@ -98,8 +95,11 @@ class Playfair():
 		#first/second[Row=1, Column=0]
 		first = self.getIndex(c1) #index of first 
 		second = self.getIndex(c2) #index of second
-		
 		#Different Column
+		if first == None or second == None:
+			print("Error: non-alpha character detected")
+			quit()
+		
 		if first[0] != second[0]:
 			#Different Row
 			if first[1] != second[1]:
