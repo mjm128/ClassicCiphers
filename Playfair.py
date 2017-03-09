@@ -12,7 +12,7 @@ class Playfair():
 		if len(key) > 0:
 			for character in key:
 				if not character.isalpha():
-					print("Error: Key must contain only characters")
+					print("\nError: Key must contain only alpha characters")
 					return False
 				if character == 'i' or character == 'j':
 					#Representing i and j as just i
@@ -40,7 +40,7 @@ class Playfair():
 			self.matrix.append(m[20:25])		
 			return True
 				
-		print("Error: Key must be at least one character")
+		print("\nError: Key must be at least one character")
 		return False
 		
 	def encrypt(self, plainText):
