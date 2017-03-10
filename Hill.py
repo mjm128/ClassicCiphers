@@ -25,18 +25,47 @@ class Hill():
 					  "\n\n"
 		print(stringIntro)
 
+		print("--Checking Key--")
 		#make a copy of the key to manipulate
-		newKey = key
-		#switch to lowercase
-		newKey = newKey.lower()
-		#convert letters to int
-		newKey = [int(ord(i)) - 97 for i in newKey]
+		preKey = key
+		#switch to lowercase if applicable
+		preKey = preKey.lower()
 
+		#check for both alphas and numbers
+
+		#alpha conversion
+		if preKey.isalpha():
+			newKey = [int(ord(i) - 97) for i in preKey]
+
+		#number conversion, split by commas
+		else:
+			try:
+				newKey = []
+				for i in preKey.split(','):
+					temp = int(i)
+					if temp >= 0 and temp <= 25:
+						newKey.append(temp)
+					else:
+						print("Error adding in key.")
+						raise Exception
+
+			except Exception:
+				#invalid character
+				print("Error. Please enter the following for the key:"\
+					  "\n -Alpha characters (a-z, A-Z)"
+					  "\n -Numbers (between 0-25)"
+					  "\n --If you're using numbers, add commas (',') to separate numbers within your key")
+				exit()
+
+		print("Your inputted key in number form: \n",newKey)
+
+		print("\nConverting key to a matrix and performing checks...")
 		#check if it's an m*m matrix
 		m = sqrt(len(newKey))
 		if m * m != len(newKey):
-			print("Invalid Key. Please enter an m * m invertible matrix.")
+			print("Invalid Key. Please enter an m * m invertible matrix.\n")
 			return False
+		print("  --Valid m*m matrix: Yes")
 
 		#create the matrix
 		matrix = []
@@ -48,23 +77,26 @@ class Hill():
 		#check if it's invertible
 		try:
 			linalg.inv(matrix)
+			print("  --is Invertible: Yes")
 		except Exception:
-			print("Error: Key is not an invertible matrix")
+			print("Error: Key is not an invertible matrix\n")
 			return False
 
 		#grab the determinant and check if it's equal to 0 or if it's divisible by 2 or 13
 		det = int(linalg.det(matrix))
+		print("  --Valid determinant: Yes")
 		if det == 0 or det % 2 == 0 or det % 13 == 0:
-			print("Error: The key must have a determinant of 0 and must not be divisible by 2 or 13")
+			print("The determinant of your matrix is: ", det)
+			print("\nError: The key must have a determinant of 0 and must not be divisible by 2 or 13")
 			return False
 
+		print("\nThe key is valid. Proceeding...\n")
 		#return True if it passes all check
 		self.key = matrix
 		return True
 
 	def encrypt(self, plainText):
-		print("Encrypting...")
-		print(self.key)
+		print("---Encrypting---")
 
 		#change to lowercase
 		plainText = plainText.lower()
@@ -124,10 +156,11 @@ class Hill():
 		cipherMatrix = [list(i) for i in zip(*cipherMatrix)]
 		cipherMatrix = [chr(i + 97) for inner in cipherMatrix for i in inner]
 		cipherText = ''.join(i for inner in cipherMatrix for i in inner)
+
 		return cipherText
 		
 	def decrypt(self, cipherText):
-		print("Decrypting...")
+		print("---Decrypting---")
 
 		#change to lowercase
 		cipherText = cipherText.lower()
