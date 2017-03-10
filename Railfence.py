@@ -16,7 +16,7 @@ class Railfence():
 		
 	def encrypt(self, plainText):
 		cipherText = ""
-		rowLength = len(plainText) / self.key
+		rowLength = int(len(plainText) / self.key)
 		extra = len(plainText) % self.key	
 		railfence = [None] * self.key
 		for i in range(0, self.key):
@@ -39,8 +39,8 @@ class Railfence():
 	def decrypt(self, cipherText):
 		plainText = ""
 		bucket = [None] * len(cipherText)
-		rowLength = len(cipherText) / self.key
-		extra = len(cipherText) % self.key	
+		rowLength = int(len(cipherText) / self.key)
+		extra = len(cipherText) % self.key
 		railfence = [None] * self.key
 		for i in range(0, self.key):
 			if i < extra:
