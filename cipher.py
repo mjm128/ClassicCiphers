@@ -63,7 +63,7 @@ def main(*arguments):
 				#strip non-alpha characters and lower case
 				inputString = ''.join([c.lower() for c in f.read() if c.isalpha()])
 	except:
-		print("\nError: Input file doesn't exist")
+		print("\nError: Input file \""+inFile+"\" doesn't exist")
 		quit()
 			
 	if cipherName == "PLF":
