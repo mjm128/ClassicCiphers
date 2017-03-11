@@ -57,7 +57,7 @@ class Hill():
 					  "\n --If you're using numbers, add commas (',') to separate numbers within your key")
 				exit()
 
-		print("Your inputted key in number form: \n",newKey)
+		print("Your inputted key in number form:\n" + str(newKey))
 
 		print("\nConverting key to a matrix and performing checks...")
 		#check if it's an m*m matrix
