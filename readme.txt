@@ -36,7 +36,7 @@ EXECUTION INSTRUCTIONS:
 -----------------------------------------------------------------------
 USING THE SOFTWARE:
 
-	-Once you have executed the cipher.py file, the following command line arguments will appear
+	-Running the cipher.py file will display command line arguements
 
 	./cipher <CIPHER NAME> <KEY> <ENC/DEC> <INPUTFILE> <OUTPUT FILE> <--OPTIONS/-O>
 
@@ -55,25 +55,31 @@ USING THE SOFTWARE:
 
 	-The abbreviation of the cipher name
 
-	-The key (depending on the cipher the key format will be different) Example: Key1 = cat Key2 = 12 Key3 = 1,2,3,5
+	-The key (depending on the cipher the key format will be different) 
+		Example: Key1 = cat Key2 = 12 Key3 = 1,2,3,5
 
-	-Either type ENC if you want to encrypt or DEC if you would like to decrypt
+	-Either type ENC to encrypt or DEC to decrypt
 
 	-Type the name of the input file, including the extension
 
 	-Type the name of the output file, including the extension
 
-	-Optionally type -O to ask to convert the input file to lower case and remove special characters
+	-Optionally type -O to ask to convert the input file to lower case 
+		and remove special characters
 
 	-Press the enter key 
 
-	-Within the terminal your input and output will be displayed along with if execution was a success or any errors were found
+	-Within the terminal your input and output will be displayed along with 
+		if execution was a success or any errors were found
 
-	-Your encrypted or decrypted message will be stored in the output file within the directory you are in
+	-Your encrypted or decrypted message will be stored in the output 
+		file within the directory you are in
 
 -----------------------------------------------------------------------
 
-	-The following is an example of running the program with a Vigenre cipher, while using the key "security" and reading in from the file "in.txt" and outputing to the file "out.txt"
+	-The following is an example of running the program with a Vigenre cipher,
+		while using the key "security" and reading in from the file "in.txt"
+		and outputing to the file "out.txt"
 
 	./cipher VIG security ENC in.txt out.txt 
 
@@ -88,9 +94,12 @@ We did implement the extra-credit portion of the assignment
 -----------------------------------------------------------------------
 SPECIAL INCLUSIONS:
 
-	-Our software includes an option to convert all text to lowercase and strip the strings of non-alpha characters
+	-Our software includes an option to convert all text to lowercase and
+		strip the strings of non-alpha characters
 
-	-Our software comes with a makeclean.py file that if ran will remove all excess .pyc files in the directory that are created as a result of running the program
+	-Our software comes with a makeclean.py file that if ran will remove 
+		all excess .pyc files in the directory that are created as a result
+		of running the program
 
 -----------------------------------------------------------------------
 -----------------------------------------------------------------------
@@ -169,9 +178,12 @@ string =  m * m invertible matrix.
 
 	C:\Users\Matt\Desktop\cipher>python cipher.py HIL 1,2,3,5 ENC in.txt output.txt
 
-	The Hill Cipher is a polygraphic substitution cipher based on linear algebra. This cipher was invented by Lester S. Hill in 1929.
-	The cipher uses an n*n invertible matrix as the key, which cannot be divisible by any factors of the total length of the alphabet scheme used.
-	We will be using the english alphabet as the scheme (which is 26). This means that the determinant cannot be divisible by 13 or 2.
+	The Hill Cipher is a polygraphic substitution cipher based on linear algebra. 
+		This cipher was invented by Lester S. Hill in 1929. The cipher uses an n*n
+		invertible matrix as the key, which cannot be divisible by any factors of 
+		the total length of the alphabet scheme used. We will be using the english
+		alphabet as the scheme (which is 26). This means that the determinant cannot
+		be divisible by 13 or 2.
 
 
 	--Checking Key--
