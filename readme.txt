@@ -123,6 +123,7 @@ key = string of alpha characters
 ROW TRANSPOSITION 
 
 key = list of integers or string of alpha characters
+padding character = $
 
 	C:\Users\Matt\Desktop\cipher>cipher RTS 1,4,2,6 ENC in.txt out.txt 
 
@@ -174,7 +175,8 @@ key = integer or character
 -------------------------------------------------------------------------
 HILL
 
-string =  m * m invertible matrix.
+key = list of integers or string of alpha characters (m * m invertible matrix)
+padding char = x
 
 	C:\Users\Matt\Desktop\cipher>python cipher.py HIL 1,2,3,5 ENC in.txt output.txt
 
