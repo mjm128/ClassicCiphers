@@ -97,7 +97,7 @@ class Playfair():
 		second = self.getIndex(c2) #index of second
 		#Different Column
 		if first == None or second == None:
-			print("Error: non-alpha character detected")
+			print("Error: Non-alpha character detected in inputed text")
 			quit()
 		
 		if first[0] != second[0]:
